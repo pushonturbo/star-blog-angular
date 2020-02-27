@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   firebase : {
-    apiKey: "AIzaSyAFQcVFh054Q3IQ0AtcGV2Lvttzjyi0ddw",
-    authDomain: "star-start-blog.firebaseapp.com",
-    databaseURL: "https://star-start-blog.firebaseio.com",
-    projectId: "star-start-blog",
-    storageBucket: "star-start-blog.appspot.com",
-    messagingSenderId: "602366351223",
-    appId: "1:602366351223:web:e96d55e68251cd91af7372",
-    measurementId: "G-NKSL51BGBR"
+    apiKey: "AIzaSyAtgryOzsFjNZI5Q2msO8vkMu2lPJr7Rxs",
+    authDomain: "star-blog-angular.firebaseapp.com",
+    databaseURL: "https://star-blog-angular.firebaseio.com",
+    projectId: "star-blog-angular",
+    storageBucket: "star-blog-angular.appspot.com",
+    messagingSenderId: "82355734232",
+    appId: "1:82355734232:web:fd4e177dba0ff232a739ad",
+    measurementId: "G-JR1GP2BBFE"
   }
 };
 

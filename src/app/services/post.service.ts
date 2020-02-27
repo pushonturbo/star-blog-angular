@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFirestore } from '@angular/fire/firestore';
+
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Post } from '../models/Post';
 
@@ -11,13 +15,30 @@ const httpOptions = {
 
 @Injectable()
 export class PostService {
+  
   postsUrl: string = 'https://jsonplaceholder.typicode.com/posts';
 
-  constructor(private http: HttpClient) { }
+  private API_URL = '/posts';
+
+  constructor(private http: HttpClient, private db: AngularFireDatabase, private dbFS: AngularFirestore) { }
 
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.postsUrl);
   }
+
+  getStarPosts(): Observable<any[]> {
+    return this.db.list<any>(this.API_URL).snapshotChanges()
+      .pipe(map(response => response.map(post => this.assignKey(post))));
+  }
+
+  getStardbFSPosts() {
+    return this.dbFS.collection('posts').snapshotChanges();
+  }
+
+  private assignKey(post) {
+    return { ...post.payload.val(), key: post.key };
+  }
+
 
   savePost(post: Post): Observable<Post> {
     return this.http.post<Post>(this.postsUrl, post, httpOptions);

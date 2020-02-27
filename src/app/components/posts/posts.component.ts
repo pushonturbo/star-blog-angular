@@ -23,6 +23,11 @@ export class PostsComponent implements OnInit {
     this.postService.getPosts().subscribe(posts => {
       this.posts = posts;
     });
+
+    this.postService.getStarPosts().subscribe(console.log);
+
+    this.postService.getStardbFSPosts().subscribe(console.log);
+
   }
 
   onNewPost(post: Post) {
