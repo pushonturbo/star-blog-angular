@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { AngularFireDatabase } from '@angular/fire/database';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class PostService {
 
   private API_URL = '/posts';
 
-  constructor(private http: HttpClient, private db: AngularFireDatabase, private dbFS: AngularFirestore) { }
+  constructor(private http: HttpClient, private db: AngularFireDatabase, private afs: AngularFirestore) { }
 
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.postsUrl);
@@ -31,15 +31,15 @@ export class PostService {
       .pipe(map(response => response.map(post => this.assignKey(post))));
   }
 
-  getStardbFSPosts() {
-    return this.dbFS.collection('posts').snapshotChanges();
-  }
-
   private assignKey(post) {
     return { ...post.payload.val(), key: post.key };
   }
 
+  getStardbFSPosts() {
+    return this.afs.collection('posts').valueChanges()
+  }
 
+  
   savePost(post: Post): Observable<Post> {
     return this.http.post<Post>(this.postsUrl, post, httpOptions);
   }
